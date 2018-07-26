@@ -1,0 +1,109 @@
+
+<mat-card class="editCard">
+<form [formGroup]="editDrinkForm" (ngSubmit)="onSubmit()" *ngIf="drink">
+  <div class="form-group">
+      <mat-form-field>
+        <input matInput type="text"
+              id="drinkName"
+              class="form-control"
+              placeholder="Drink name"
+              formControlName="drinkName">
+      </mat-form-field >
+  </div>
+  <div class="form-group">
+
+
+        <mat-form-field>
+
+      <mat-select id="drinkType" class="form-control" formControlName="drinkType">
+        <mat-option value="beer" >Beer</mat-option>
+        <mat-option value="wine">Wine</mat-option>
+        <mat-option value="cider">Cider</mat-option>
+        <mat-option value="vodka">Vodka</mat-option>
+        <mat-option value="tequila">Tequila</mat-option>
+        <mat-option value="whisky">Whisky</mat-option>
+        <mat-option value="other" >Other</mat-option>
+    </mat-select>
+  </mat-form-field>
+    <div *ngIf="this.editDrinkForm.get('drinkType').value === 'other'">
+        <mat-form-field>
+        <input matInput placeholder="Other type" type="text" id="drinkTypeOther" class="form-control" formControlName="drinkTypeOther"  />
+      </mat-form-field>
+    </div>
+  </div>
+  
+  <div class="form-group">
+      <mat-form-field>
+    <textarea matInput
+           id="drinkComments"
+           placeholder="Comments"
+           type="textarea"
+           class="form-control"
+           formControlName="drinkComments" >
+      </textarea>
+           </mat-form-field>
+  </div>
+  <div class="addDrinkZone">
+    <div class="addDrink">
+  <div class="addDrink_byPhoto">
+    <label for="cameraInput">
+        <mat-icon class="icon">photo_camera</mat-icon>
+        <p>Take an other photo</p>
+     
+    </label>
+    <input type="file" capture="camera" accept="image/*" id="cameraInput" name="cameraInput" (change)="onFileSelected($event)">
+  </div>
+
+  <div class="addDrink_byFile">
+    <label for="fileInput">
+        <mat-icon class="icon">image_search</mat-icon>
+        <p>Choose an other image</p>
+        
+    </label>
+    <input type="file" accept="image/*" id="fileInput" name="fileInput" (change)="onFileSelected($event)">
+  </div>
+
+
+</div>
+<div class="editImgContainer">
+  <!-- <img *ngIf="!uploadFileService.downloadURL" [attr.src]="drink.drinkPhotoUrl" /> -->
+
+  <div *ngIf="!uploadFileService.downloadURL" class="imageToModify" [ngStyle]="{'background-image': 'url(' + drink.drinkPhotoUrl + ')', 'background-position-x': this.xPosition +'%', 'background-position-y': this.yPosition +'%'} ">
+    <a class="direction is-left" (click)="changePosition('left')"><mat-icon class="icon md-48 white">keyboard_arrow_left</mat-icon></a>
+    <a class="direction is-right" (click)="changePosition('right')"><mat-icon class="icon md-48 white">keyboard_arrow_right</mat-icon></a>
+    <a class="direction is-up" (click)="changePosition('up')"><mat-icon class="icon md-48 white">keyboard_arrow_up</mat-icon></a>
+    <a class="direction is-down" (click)="changePosition('down')"><mat-icon class="icon md-48 white">keyboard_arrow_down</mat-icon></a>
+  </div>
+
+  <div class="uploadProgress" *ngIf="!uploadFileService.downloadURL && (uploadFileService.uploadPercent | async) != null">
+      <mat-spinner *ngIf="!uploadFileService.downloadURL && (uploadFileService.uploadPercent | async) != null"></mat-spinner> 
+      <div class="percentageValue" *ngIf="!uploadFileService.downloadURL">{{ uploadFileService.uploadPercent | async }} </div>
+  </div>
+
+  <div *ngIf="(uploadFileService.uploadPercent | async) >= 100 || (uploadFileService.uploadPercent | async) != null" class="imageToModify newImage" [ngStyle]="{'background-image': 'url(' + (uploadFileService.downloadURL | async) + ')', 'background-position-x': this.xPosition +'%', 'background-position-y': this.yPosition +'%'} ">
+    <a class="direction is-left" (click)="changePosition('left')"><mat-icon class="icon md-48 white">keyboard_arrow_left</mat-icon></a>
+    <a class="direction is-right" (click)="changePosition('right')"><mat-icon class="icon md-48 white">keyboard_arrow_right</mat-icon></a>
+    <a class="direction is-up" (click)="changePosition('up')"><mat-icon class="icon md-48 white">keyboard_arrow_up</mat-icon></a>
+    <a class="direction is-down" (click)="changePosition('down')"><mat-icon class="icon md-48 white">keyboard_arrow_down</mat-icon></a>
+  </div>
+ 
+  <!-- <img class="new" [attr.src]="uploadFileService.downloadURL | async" /> -->
+</div>
+</div>
+
+<div class="wrapperTwoButtons">
+
+    <button mat-raised-button color="accent"
+    type="submit" routerLink="/drink-list"
+    >Cancel</button>
+
+  <button mat-raised-button color="primary" class="btn btn-primary"
+          type="submit"
+          [disabled]="editDrinkForm.invalid">Validate</button>
+
+         
+        </div>
+</form>
+</mat-card>
+<button class="deleteBt" mat-raised-button color="warn" (click)="onDeleteDrink()"><mat-icon class="icon">clear</mat-icon>Delete this drink</button>
+

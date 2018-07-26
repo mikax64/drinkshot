@@ -1,0 +1,6 @@
+<ul class="drinkList">
+  <li *ngFor="let drink of drinks | async" (click)='goToDrinkDetail(drink.drinkId)' [ngStyle]="{'background-image': 'url(' + this.drink.drinkPhotoUrl + ')', 'background-position-x': this.drink.drinkXPosition +'%', 'background-position-y': this.drink.drinkYPosition +'%'}">
+  </li>
+</ul>
+
+<div class="emptyList" *ngIf="this.isEmpty">Your list is empty !<br>Add some files or take photos</div>

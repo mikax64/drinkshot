@@ -1,0 +1,69 @@
+
+<mat-card class="addCard">
+<form [formGroup]="addDrinkForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <mat-form-field>
+      <input matInput type="text"
+             id="drinkName"
+             class="form-control"
+             placeholder="Drink name :"
+             formControlName="drinkName">
+      </mat-form-field>
+    </div>
+    <div class="form-group">
+        <mat-form-field>
+          <mat-select id="drinkType" class="form-control" formControlName="drinkType">
+            <mat-option value="beer" selected>Beer</mat-option>
+            <mat-option value="wine">Wine</mat-option>
+            <mat-option value="cider">Cider</mat-option>
+            <mat-option value="vodka">Vodka</mat-option>
+            <mat-option value="tequila">Tequila</mat-option>
+            <mat-option value="whisky">Whisky</mat-option>
+            <mat-option value="other" >Other</mat-option>
+        </mat-select>
+          </mat-form-field>
+  
+  
+  
+      <div *ngIf="this.addDrinkForm.get('drinkType').value === 'other'">
+        <label for="drinkTypeOther">Other</label>
+        <input type="textarea" id="drinkTypeOther" class="form-control" formControlName="drinkTypeOther" />
+      </div>
+    </div>
+    
+    <div class="form-group">
+        <mat-form-field>
+      <textarea matInput
+             id="drinkComments"
+             placeholder="Comments"
+             type="textarea"
+             class="form-control"
+             formControlName="drinkComments" ></textarea>
+        </mat-form-field>
+    </div>
+    <div class="imgUploadZone">
+     
+         <mat-spinner *ngIf="!uploadFileService.downloadURL && (uploadFileService.uploadPercent | async) != null"></mat-spinner> 
+        <div class="percentageValue" *ngIf="!uploadFileService.downloadURL">{{ uploadFileService.uploadPercent | async }}</div>
+
+     
+        <!-- <img [attr.src]="uploadFileService.downloadURL | async" /> -->
+        
+        <div *ngIf="(uploadFileService.uploadPercent | async) >= 100 || (uploadFileService.uploadPercent | async) != null" class="imageToAdd" [ngStyle]="{'background-image': 'url(' + (uploadFileService.downloadURL | async) + ')', 'background-position-x': this.xPosition +'%', 'background-position-y': this.yPosition +'%'} ">
+          <a class="direction is-left" (click)="changePosition('left')"><mat-icon class="icon md-48 white">keyboard_arrow_left</mat-icon></a>
+          <a class="direction is-right" (click)="changePosition('right')"><mat-icon class="icon md-48 white">keyboard_arrow_right</mat-icon></a>
+          <a class="direction is-up" (click)="changePosition('up')"><mat-icon class="icon md-48 white">keyboard_arrow_up</mat-icon></a>
+          <a class="direction is-down" (click)="changePosition('down')"><mat-icon class="icon md-48 white">keyboard_arrow_down</mat-icon></a>
+        </div>
+
+    </div>
+    
+    <button mat-raised-button color="primary" class="addDrink_bt"
+            type="submit"
+            [disabled]="addDrinkForm.invalid || uploadFileService.downloadURL == null">Add drink</button>
+  </form>
+
+
+</mat-card>
+
+  

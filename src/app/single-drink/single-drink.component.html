@@ -1,0 +1,16 @@
+
+
+
+<div class="singleDrink">
+    <div class="singleDrink_imgContainer" [ngStyle]="{'background-image': 'url(' + (drink | async)?.drinkPhotoUrl + ')', 'background-position-x': (drink | async)?.drinkXPosition + '%', 'background-position-y': (drink | async)?.drinkYPosition + '%'}">
+        <!-- <img [attr.src]="(drink | async)?.drinkPhotoUrl" /> -->
+    </div>
+    
+    <div class="singleDrink_infos">
+        <h2>{{ (drink | async)?.drinkName }}</h2>
+        <span class="singleDrink_type">{{ (drink | async)?.drinkType }}</span>
+        <span class="singleDrink_date"> - {{ (drink | async)?.drinkDate.toDate() | date:'dd/MM/yyyy - HH:mm'  }}</span>
+        <p class="singleDrink_comments">{{ (drink | async)?.drinkComments }}</p>
+        <a routerLink="edit" class="singleDrink_edit"><mat-icon class="icon">create</mat-icon></a>
+    </div>
+</div>

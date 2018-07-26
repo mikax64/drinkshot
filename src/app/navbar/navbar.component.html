@@ -1,0 +1,25 @@
+<ul class="navbar">
+        <li routerLinkActive="active"><a routerLink="drink-list"><mat-icon class="icon">grid_on</mat-icon> </a></li>
+      
+      
+        <li>
+            <div class="addDrink_byPhoto">
+                <label for="cameraInputNav">
+                    <mat-icon class="icon">add_a_photo</mat-icon>
+              </label>
+              <input type="file" capture="camera" accept="image/*" id="cameraInputNav" name="cameraInputNav" (change)="onFileSelectedNavbar($event)">
+              </div>
+          </li>
+      
+      
+      
+        <li>
+          <div class="addDrink_byFile">
+              <label for="fileInputNav">
+                  <mat-icon class="icon">image_search</mat-icon>
+            </label>
+            <input type="file" accept="image/*" id="fileInputNav" name="fileInputNav" (change)="onFileSelectedNavbar($event)">
+            </div>
+        </li>
+      </ul>
+      

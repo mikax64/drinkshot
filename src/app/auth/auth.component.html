@@ -1,0 +1,97 @@
+
+<div *ngIf="authService.afAuth.user | async as user; else showLogin">
+
+</div>
+<ng-template #showLogin>
+<div class="loginPage" [class.is-login]="isLogin" >
+
+  <img class="logo" src="./assets/drinkshot-logo.png" />
+
+<mat-card class="loginCard">
+<h3>Login page</h3>
+<form [formGroup]="loginForm" (ngSubmit)="onLoginSubmit()">
+  <div class="form-group">
+
+    <mat-form-field >
+    <input matInput type="text"
+           id="emailLogin"
+           class="form-control"
+           placeholder="Email address"
+           formControlName="emailLogin">
+    </mat-form-field>
+    
+  </div>
+  <div class="form-group">
+
+    <mat-form-field >
+    <input matInput type="text"
+           id="passwordLogin"
+           class="form-control"
+           placeholder="Password"
+           formControlName="passwordLogin">
+          </mat-form-field>
+  </div>
+  <p class="error-message">{{this.errorMessage}}</p>
+  <button mat-raised-button color="primary" 
+          type="submit"
+          [disabled]="loginForm.invalid">Login</button>
+</form>
+
+
+    <a class="loginGoogle_bt" (click)="onGoogleLogin()"></a>
+
+</mat-card>
+
+<div class="createAccount" [class.is-login]="isLogin">
+  <p class="createAccount_text">Not yet registered ?</p>
+  <button mat-raised-button color="primary" class="createAccount_bt" (click)="togglePage()">Create an account</button>
+</div>
+<div class="registerCard">
+  <mat-card>
+  <h3>Account creation</h3>
+  <form [formGroup]="registerForm" (ngSubmit)="onRegisterSubmit()">
+    <div class="form-group">
+      <mat-form-field >
+      <input matInput type="text"
+             id="email"
+             class="form-control"
+             placeholder="Email address"
+             formControlName="email">
+             
+      </mat-form-field>
+      
+    </div>
+    <div class="form-group">
+        <mat-form-field >
+          <input matInput type="password"
+                id="password"
+                class="form-control"
+                placeholder="Password"
+                formControlName="password">
+          </mat-form-field>
+    </div>
+    
+    <p class="error-message" *ngIf="registerForm.get('password').hasError('minlength')">Password must be at list 6 characters</p>
+    <p class="error-message">{{ errorMessageCreate }}</p>
+    <button mat-raised-button color="primary"
+            type="submit"
+            [disabled]="registerForm.invalid">Create my account</button>
+  </form>
+
+  </mat-card>
+  <p class="backToLogin" (click)="togglePage()">  <mat-icon class="md-36 darkPrimaryColor">keyboard_arrow_left</mat-icon><span>Back to login</span> </p>
+
+</div>
+</div>
+</ng-template>
+
+
+
+
+
+
+
+
+
+
+  
